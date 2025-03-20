@@ -144,6 +144,11 @@ body {
   position: relative;
   animation: glow 2s ease-in-out infinite alternate;
   transition: font-size 0.3s ease;
+  width: 200px;
+  text-align: center;
+  overflow: hidden;
+  height: 50px;
+  line-height: 50px;
 }
 
 @keyframes glow {
