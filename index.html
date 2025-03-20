@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="he">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Effects Studio Pro - דמו עתידני</title>
+    <!-- קישור לגופן Heebo מ-Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;700&display=swap" rel="stylesheet">
+    <!-- קישור לקובץ ה-CSS -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="stars-background"></div>
+    <canvas id="particles-canvas"></canvas>
+
+    <!-- תפריט ולוגו באותה שורה -->
+    <div class="top-bar">
+        <nav class="floating-menu">
+            <button class="menu-toggle">תפריט</button>
+            <div class="menu-items">
+                <a href="#">בית</a>
+                <a href="#">אודות</a>
+                <a href="#">הוראות שימוש</a>
+            </div>
+        </nav>
+        <div class="header">
+            <div class="logo">Effect-Cube</div>
+        </div>
+    </div>
+
+    <div class="upload-container">
+        <div class="upload-text">
+            <h1>גרור תמונה לכאן</h1>
+            <p>או לחץ לבחירת קובץ</p>
+        </div>
+        <div class="fixed-message" id="fixed-message">
+            <h3 id="fixed-message-title"></h3>
+            <p id="fixed-message-content"></p>
+        </div>
+        <input type="file" id="file-input" accept="image/*" hidden>
+        <!-- הכפתורים וה-effects-panel בתוך button-container -->
+        <div class="button-container">
+            <div class="left-buttons">
+                <button class="floating-btn continue-btn" id="continue-btn">המשך</button>
+                <button class="floating-btn" id="back-btn">חזור</button>
+                <button class="floating-btn" id="dynamic-btn" style="display: none;">צור MP4</button>
+            </div>
+            <div class="effects-panel" id="effects-panel">
+                <div class="arrow-btn arrow-left">←</div>
+                <div class="effect-item" id="current-effect"></div>
+                <div class="arrow-btn arrow-right">→</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- קישור לספריית GSAP -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <!-- קישור לקובץ ה-JavaScript -->
+    <script src="script.js"></script>
+</body>
+</html>
