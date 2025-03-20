@@ -93,10 +93,38 @@ menuToggle.addEventListener('click', () => {
             { x: 100, opacity: 0 },
             { x: 0, opacity: 1, duration: 0.3, ease: "power2.out" }
         );
+        
+        // שינוי הלוגו ל-EC עם אנימציה
         gsap.to(logo, {
-            fontSize: window.innerWidth <= 600 ? "20px" : "24px",
-            duration: 0.3,
-            ease: "power2.out"
+            scale: 0.8,
+            opacity: 0,
+            duration: 0.2,
+            ease: "power2.out",
+            onComplete: () => {
+                logo.innerHTML = "<span class='logo-letter'>E</span><span class='logo-connector'>⚡</span><span class='logo-letter'>C</span>";
+                gsap.to(logo, {
+                    fontSize: window.innerWidth <= 600 ? "32px" : "36px",
+                    scale: 1,
+                    opacity: 1,
+                    duration: 0.2,
+                    rotation: 360,
+                    ease: "back.out(1.7)"
+                });
+                
+                // אנימציית חיבור בין האותיות
+                gsap.fromTo('.logo-connector', 
+                    { scale: 0, opacity: 0 },
+                    { scale: 1, opacity: 1, duration: 0.3, delay: 0.1, ease: "elastic.out(1.2)" }
+                );
+                
+                // אנימציית נצנוץ לאותיות
+                gsap.to('.logo-letter', {
+                    textShadow: "0 0 15px rgba(0, 243, 255, 0.8), 0 0 20px rgba(255, 0, 255, 0.5)",
+                    duration: 0.5,
+                    repeat: 1,
+                    yoyo: true
+                });
+            }
         });
     } else {
         menuToggle.textContent = 'תפריט';
@@ -109,10 +137,24 @@ menuToggle.addEventListener('click', () => {
                 menuItems.classList.remove('open');
             }
         });
+        
+        // החזרת הלוגו ל-Effect-Cube עם אנימציה
         gsap.to(logo, {
-            fontSize: window.innerWidth <= 600 ? "32px" : "36px",
-            duration: 0.3,
-            ease: "power2.out"
+            scale: 0.8,
+            opacity: 0,
+            duration: 0.2,
+            ease: "power2.out",
+            onComplete: () => {
+                logo.innerHTML = "Effect-Cube";
+                gsap.to(logo, {
+                    fontSize: window.innerWidth <= 600 ? "32px" : "36px",
+                    scale: 1,
+                    opacity: 1,
+                    duration: 0.2,
+                    rotation: 0,
+                    ease: "back.out(1.7)"
+                });
+            }
         });
     }
 });
@@ -131,10 +173,24 @@ document.querySelectorAll('.menu-items a').forEach(link => {
                     menuItems.classList.remove('open');
                 }
             });
+            
+            // החזרת הלוגו ל-Effect-Cube עם אנימציה
             gsap.to(logo, {
-                fontSize: window.innerWidth <= 600 ? "32px" : "36px",
-                duration: 0.3,
-                ease: "power2.out"
+                scale: 0.8,
+                opacity: 0,
+                duration: 0.2,
+                ease: "power2.out",
+                onComplete: () => {
+                    logo.innerHTML = "Effect-Cube";
+                    gsap.to(logo, {
+                        fontSize: window.innerWidth <= 600 ? "32px" : "36px",
+                        scale: 1,
+                        opacity: 1,
+                        duration: 0.2,
+                        rotation: 0,
+                        ease: "back.out(1.7)"
+                    });
+                }
             });
         }
     });
