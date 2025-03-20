@@ -8,6 +8,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;700&display=swap" rel="stylesheet">
     <!-- קישור לקובץ ה-CSS -->
     <link rel="stylesheet" href="styles.css">
+    <!-- קישור לקובץ ה-CSS של התפריט התחתון -->
+    <link rel="stylesheet" href="bottom-nav.css">
 </head>
 <body>
     <div class="stars-background"></div>
@@ -53,9 +55,38 @@
         </div>
     </div>
 
+    <!-- תפריט תחתון לניווט בין האפשרויות השונות -->
+    <nav class="bottom-navigation">
+        <ul class="nav-list">
+            <li class="nav-item active">
+                <a href="#" class="nav-link" data-target="effects">
+                    <span class="nav-icon"><i class="fas fa-magic"></i></span>
+                    <span class="nav-text">אפקטים</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="#" class="nav-link" data-target="youtube">
+                    <span class="nav-icon"><i class="fab fa-youtube"></i></span>
+                    <span class="nav-text">יוטיוב</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="#" class="nav-link" data-target="ads">
+                    <span class="nav-icon"><i class="fas fa-ad"></i></span>
+                    <span class="nav-text">פרסומות</span>
+                </a>
+            </li>
+            <div class="nav-indicator"></div>
+        </ul>
+    </nav>
+
     <!-- קישור לספריית GSAP -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <!-- קישור לספריית Font Awesome -->
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
     <!-- קישור לקובץ ה-JavaScript -->
     <script src="script.js"></script>
+    <!-- קישור לקובץ ה-JavaScript של התפריט התחתון -->
+    <script src="bottom-nav.js"></script>
 </body>
 </html>
