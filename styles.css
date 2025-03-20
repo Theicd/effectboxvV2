@@ -202,6 +202,15 @@ body {
   font-size: 16px;
 }
 
+.upload-container.image-selected {
+  pointer-events: none; /* מונע אירועי קליק על אזור התמונה */
+}
+
+.upload-container.image-selected .button-container,
+.upload-container.image-selected .effects-panel {
+  pointer-events: auto; /* מאפשר אירועי קליק רק על הכפתורים ופאנל האפקטים */
+}
+
 .fixed-message {
   position: absolute;
   top: 20%;
@@ -230,6 +239,7 @@ body {
   padding: 0 20px;
   z-index: 5;
   flex-direction: row-reverse;
+  pointer-events: auto; /* אפשר אירועי לחיצה על הכפתורים */
 }
 
 .left-buttons {

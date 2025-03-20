@@ -229,6 +229,7 @@ const handleImageUpload = (file) => {
     reader.onload = (e) => {
         document.querySelector('.upload-container').style.backgroundImage = `url(${e.target.result})`;
         document.querySelector('.upload-text').style.opacity = '0';
+        document.querySelector('.upload-container').classList.add('image-selected'); 
         animateButtons(true);
         currentState = 1;
         updateState();
@@ -242,11 +243,16 @@ const updateState = () => {
             hideFixedMessage();
             effectsPanel.style.display = 'none';
             dynamicBtn.style.display = 'none';
+            document.querySelector('.upload-container').classList.remove('image-selected');
+            document.querySelector('.upload-container').onclick = function() {
+                document.getElementById('file-input').click();
+            };
         },
         () => {
             document.getElementById('continue-btn').textContent = 'המשך';
             showFixedMessage('בחר קטגוריה', 'בחר קטגוריה מהרשימה ולחץ על המשך\nאנימציה: מוסיף תנועה\nצבעים: משנה גוונים\nטקסטורות: מוסיף מרקם');
             toggleDynamicElement(true, ['אנימציה', 'צבעים', 'טקסטורות']);
+            document.querySelector('.upload-container').onclick = null;
         },
         () => {
             document.getElementById('continue-btn').textContent = 'הוסף';
@@ -284,6 +290,7 @@ const updateState = () => {
                 animateButtons(false);
                 document.querySelector('.upload-container').style.backgroundImage = '';
                 document.querySelector('.upload-text').style.opacity = '1';
+                document.querySelector('.upload-container').classList.remove('image-selected');
                 updateState();
             }, 2000);
         }
@@ -291,10 +298,6 @@ const updateState = () => {
 
     if (states[currentState]) states[currentState]();
 };
-
-document.querySelector('.upload-container').addEventListener('click', () => {
-    document.getElementById('file-input').click();
-});
 
 document.getElementById('file-input').addEventListener('change', (e) => {
     if (e.target.files[0]) handleImageUpload(e.target.files[0]);
@@ -322,6 +325,13 @@ document.getElementById('back-btn').addEventListener('click', () => {
         currentState--;
         if (currentState === 3 && selectedEffects > 1) selectedEffects--;
         updateState();
+    } else if (currentState === 1) {
+        currentState = 0;
+        document.querySelector('.upload-container').style.backgroundImage = '';
+        document.querySelector('.upload-text').style.opacity = '1';
+        document.querySelector('.upload-container').classList.remove('image-selected');
+        animateButtons(false);
+        updateState();
     }
 });
 
@@ -346,3 +356,7 @@ document.body.addEventListener('drop', (e) => {
     const file = e.dataTransfer.files[0];
     if (file && file.type.startsWith('image/')) handleImageUpload(file);
 });
+
+document.querySelector('.upload-container').onclick = function() {
+    document.getElementById('file-input').click();
+};
