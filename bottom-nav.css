@@ -25,7 +25,7 @@
   box-shadow: 0 0 15px rgba(0, 243, 255, 0.5);
   z-index: 1000;
   backdrop-filter: blur(5px);
-  overflow: hidden;
+  overflow: visible; /* חשוב כדי שהאינדיקטור יראה מחוץ לגבולות התפריט */
 }
 
 /* אפקט ניאון מסביב לתפריט */
@@ -41,6 +41,23 @@
   z-index: -1;
   animation: borderGlow 3s linear infinite;
   opacity: 0.6;
+}
+
+/* מסגרת עליונה של התפריט שמשתנה עם תנועת האינדיקטור */
+.bottom-navigation::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: -2px;
+  height: 25px; /* גובה המסגרת שיוצר את האפקט */
+  background-color: var(--nav-bg);
+  border-top: 2px solid var(--nav-border);
+  border-left: 2px solid var(--nav-border);
+  border-right: 2px solid var(--nav-border);
+  border-radius: 15px 15px 0 0;
+  z-index: -1;
+  transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 @keyframes borderGlow {
@@ -123,15 +140,22 @@
 
 .nav-indicator {
   position: absolute;
-  width: 60px;
-  height: 60px;
-  top: -35px; /* מיקום מתוקן */
+  width: 50px;
+  height: 50px;
+  top: -30px; /* מיקום מעל התפריט */
   border-radius: 50%;
-  background: transparent;
+  background: var(--nav-bg);
   transition: 0.5s cubic-bezier(0.16, 1, 0.3, 1); /* תנועה חלקה יותר */
-  z-index: 0;
+  z-index: 10; /* ערך גבוה יותר כדי להיות מעל הכל */
   pointer-events: none; /* חשוב! מאפשר להקליק דרך האינדיקטור */
   left: 5px; /* מיקום התחלתי */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: var(--text-color);
+  font-weight: bold;
+  text-shadow: 0 0 5px var(--indicator-color);
+  font-size: 14px;
 }
 
 /* אפקט ניאון לאינדיקטור */
@@ -145,6 +169,7 @@
   border: 2px solid var(--indicator-color);
   box-shadow: 0 0 15px var(--indicator-color), inset 0 0 15px var(--indicator-color);
   animation: pulseGlow 2s infinite alternate;
+  z-index: -1;
 }
 
 /* עיגול פנימי מואר */
@@ -157,6 +182,7 @@
   background: var(--indicator-color);
   box-shadow: 0 0 15px var(--indicator-color);
   animation: innerPulse 1.5s infinite alternate;
+  z-index: -1;
 }
 
 @keyframes pulseGlow {
@@ -181,7 +207,7 @@
   }
 }
 
-/* הזזת האינדיקטור מבוססת על שימוש ב-translateX ולא מחושבת על פי מיקום */
+/* הזזת האינדיקטור מבוססת על מיקומים קבועים */
 .nav-list li:nth-child(1).active ~ .nav-indicator {
   transform: translateX(0);
 }
@@ -218,6 +244,40 @@
   box-shadow: 0 0 5px var(--indicator-color);
   opacity: 0;
   pointer-events: none;
+}
+
+/* קווים צדדיים שיוצרים את השיפוע במסגרת */
+.curve-left,
+.curve-right {
+  position: absolute;
+  top: -25px;
+  width: 20px;
+  height: 25px;
+  z-index: 9; /* מתחת לאינדיקטור אבל מעל התפריט */
+  background-color: var(--nav-bg);
+  transition: 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.curve-left {
+  border-top-right-radius: 20px;
+  border-right: 2px solid var(--nav-border);
+  box-shadow: 5px -5px 0 0 var(--nav-bg);
+}
+
+.curve-right {
+  border-top-left-radius: 20px;
+  border-left: 2px solid var(--nav-border);
+  box-shadow: -5px -5px 0 0 var(--nav-bg);
+}
+
+/* כיסוי הקו העליון של המסגרת במקום שבו נמצא האינדיקטור */
+.nav-indicator-mask {
+  position: absolute;
+  height: 3px;
+  background-color: var(--nav-bg);
+  top: -3px;
+  z-index: 8;
+  transition: 0.5s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 /* התאמה למסכים קטנים */

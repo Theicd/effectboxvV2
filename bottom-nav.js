@@ -5,20 +5,32 @@ document.addEventListener('DOMContentLoaded', function() {
     // בחירת האלמנטים
     const navItems = document.querySelectorAll('.nav-item');
     const indicator = document.querySelector('.nav-indicator');
+    const indicatorMask = document.querySelector('.nav-indicator-mask');
     const navList = document.querySelector('.nav-list');
+    const curveLeft = document.querySelector('.curve-left');
+    const curveRight = document.querySelector('.curve-right');
     
-    // מיקום האינדיקטור בפתיחה
-    function positionIndicator(item) {
-        if (!item || !indicator) return;
+    // מיקום האינדיקטור והקמרונים בפתיחה
+    function positionElements(item) {
+        if (!item || !indicator || !curveLeft || !curveRight || !indicatorMask) return;
         
         const itemRect = item.getBoundingClientRect();
         const navRect = navList.getBoundingClientRect();
         
-        // מיקום ביחס לתפריט
-        const leftPosition = itemRect.left - navRect.left + (itemRect.width / 2) - (indicator.offsetWidth / 2);
+        // מיקום האינדיקטור ביחס לתפריט
+        const indicatorWidth = indicator.offsetWidth;
+        const leftPosition = itemRect.left - navRect.left + (itemRect.width / 2) - (indicatorWidth / 2);
         
-        // הגדרת מיקום מדויק
+        // הגדרת מיקום מדויק לאינדיקטור
         indicator.style.left = leftPosition + 'px';
+        
+        // מיקום האלמנטים שיוצרים את השיפוע
+        curveLeft.style.left = (leftPosition - 15) + 'px';
+        curveRight.style.left = (leftPosition + indicatorWidth - 5) + 'px';
+        
+        // מיקום ורוחב המסכה שמסתירה את קו הגבול העליון
+        indicatorMask.style.left = (leftPosition + 5) + 'px';
+        indicatorMask.style.width = (indicatorWidth - 10) + 'px';
     }
     
     // מערך לשמירת ניצוצות כוכבים
@@ -100,8 +112,8 @@ document.addEventListener('DOMContentLoaded', function() {
         // הוסף קלאס פעיל לפריט שנלחץ
         this.classList.add('active');
         
-        // מיקום האינדיקטור תחת הפריט הפעיל
-        positionIndicator(this);
+        // מיקום האינדיקטור והקמרונים תחת הפריט הפעיל
+        positionElements(this);
         
         // אנימציית פלאש לאינדיקטור
         gsap.to(indicator, {
@@ -117,6 +129,12 @@ document.addEventListener('DOMContentLoaded', function() {
                 });
             }
         });
+        
+        // אנימציה לאלמנטים שיוצרים את השיפוע והמסכה
+        gsap.fromTo([curveLeft, curveRight, indicatorMask], 
+            { opacity: 0.5, y: -5 },
+            { opacity: 1, y: 0, duration: 0.4, ease: "back.out(1.7)" }
+        );
         
         // בעתיד, כאן יהיה קוד למעבר בין הדפים השונים
         // לדוגמה:
@@ -166,18 +184,18 @@ document.addEventListener('DOMContentLoaded', function() {
         const actualButtons = Array.from(navItems).filter(item => !item.classList.contains('nav-indicator'));
         if (actualButtons.length > 0) {
             actualButtons[0].classList.add('active');
-            // מיקום התחלתי של האינדיקטור
+            // מיקום התחלתי של האינדיקטור והקמרונים
             setTimeout(() => {
-                positionIndicator(actualButtons[0]);
+                positionElements(actualButtons[0]);
             }, 100);
         }
     }
     
-    // לאחר טעינת העמוד, מקם את האינדיקטור שוב (מטפל בשינויי גודל ומקרים אחרים)
+    // לאחר טעינת העמוד, מקם את האינדיקטור והקמרונים שוב (מטפל בשינויי גודל ומקרים אחרים)
     window.addEventListener('load', function() {
         const activeItem = document.querySelector('.nav-item.active');
         if (activeItem) {
-            positionIndicator(activeItem);
+            positionElements(activeItem);
         }
     });
     
@@ -185,7 +203,7 @@ document.addEventListener('DOMContentLoaded', function() {
     window.addEventListener('resize', function() {
         const activeItem = document.querySelector('.nav-item.active');
         if (activeItem) {
-            positionIndicator(activeItem);
+            positionElements(activeItem);
         }
     });
 });
